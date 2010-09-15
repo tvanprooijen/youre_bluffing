@@ -1,0 +1,23 @@
+%h1 Listing games
+
+%ul
+  - @games.each do |game|
+    %li
+      %span{ :style => 'width: 50px;display:inline-block;'} 
+        %strong= "##{game.id}"
+      %span{ :style => 'width: 200px; color: green; display:inline-block;'}= game.status
+      %span
+        - if game.open_for_players?
+          - if logged_in_user?
+            Sign in to join this game
+          -else
+            -form_for [game, Player.new] do |f|
+              =f.submit 'Join this Game'
+
+%hr
+
+- if logged_in_user?
+  Sign in to create a game
+-else
+  -form_for(Game.new) do |f|
+    =f.submit 'Create New Game'
