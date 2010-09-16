@@ -8,8 +8,12 @@ class Game < ActiveRecord::Base
             }
             
   belongs_to  :current_player, :class_name => 'Player'
+  belongs_to  :next_player_in_bidding_round, :class_name => 'Player'
+  belongs_to  :trade_partner, :class_name => 'Player'
   
-   
+  
+  has_many :deck, :as => :card_holder, :class_name => 'Card'
+  
   aasm_column :status
   aasm_initial_state :open_for_players
     
@@ -17,6 +21,7 @@ class Game < ActiveRecord::Base
   aasm_state :starting, 
     :after_enter => Proc.new {|game|
       game.save! # make sure the status: 'starting' is saved before we initiate the processing backend
+      game.build_deck!
       begin
         p = GameProcess.create :game_id => game.id 
         game.pid = p.id
@@ -45,6 +50,23 @@ class Game < ActiveRecord::Base
       players.first
     end
     save!
+  end
+  
+  def build_deck!
+    [ ['Rooster', 10    ],
+      ['Goose',   40    ],
+      ['Cat',     90    ],
+      ['Dog',     160   ],
+      ['Sheep',   250   ],  
+      ['Goat',    350   ],
+      ['Donkey',  500   ],
+      ['Pig',     650   ],
+      ['Cow',     800   ],
+      ['Horse',   1000  ]].each{|set| 
+        4.times{ 
+          deck.create({
+            :card_type  => set[0],
+            :value      => set[1] }) }}
   end
   
 end

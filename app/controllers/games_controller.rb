@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   
   private 
   def setup
-    @game = Game.find(params[:id], :include => [:players, :current_player])
+    @game = Game.find(params[:id], :include => [:players, :current_player, :deck])
   end
   
   public
@@ -16,7 +16,7 @@ class GamesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @game.to_xml(:include => [:players, :current_player]) }
+      format.xml  { render :xml => @game.to_xml(:include => [:players, :current_player, :deck]) }
     end
   end
 

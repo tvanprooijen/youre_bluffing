@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  card_holder_type: MyString
+  card_holder_id: 1
+  type: MyString
+  value: 1
+
+two:
+  card_holder_type: MyString
+  card_holder_id: 1
+  type: MyString
+  value: 1

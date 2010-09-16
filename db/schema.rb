@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100914085959) do
+ActiveRecord::Schema.define(:version => 20100915095932) do
+
+  create_table "cards", :force => true do |t|
+    t.string   "card_holder_type"
+    t.integer  "card_holder_id"
+    t.string   "card_type"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "games", :force => true do |t|
     t.string   "status"
