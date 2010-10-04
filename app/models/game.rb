@@ -1,6 +1,8 @@
 class Game < ActiveRecord::Base
   include AASM
   
+  default_scope :order => 'created_at desc'
+  
   has_many  :players,
             :order => "created_at",
             :after_add  => Proc.new { |game, player| 
@@ -68,5 +70,11 @@ class Game < ActiveRecord::Base
             :card_type  => set[0],
             :value      => set[1] }) }}
   end
+  
+  def started_by
+    players.try(:first).try(:name)
+  end
+  
+
   
 end

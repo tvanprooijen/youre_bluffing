@@ -1,23 +1,23 @@
-%h1 Listing games
 
-%ul
-  - @games.each do |game|
-    %li
-      %span{ :style => 'width: 50px;display:inline-block;'} 
-        %strong= "##{game.id}"
-      %span{ :style => 'width: 200px; color: green; display:inline-block;'}= game.status
-      %span
-        - if game.open_for_players?
-          - if logged_in_user?
-            Sign in to join this game
-          -else
+.pane.medium
+  %h1 Listing games
+  
+  %table
+    %tr
+      %th started
+      %th by
+      %th status
+      %th &nbsp;
+    - @games.each do |game|
+      %tr{ :class => "row #{cycle('even','')}"}
+        %td.cell= "#{time_ago_in_words(game.created_at)} ago"
+        %td.cell-dark= game.started_by
+        %td.cell
+          %span{:class => "status #{game.status}"}= game.status.humanize
+        %td.cell-dark
+          - if game.open_for_players?
             -form_for [game, Player.new] do |f|
               =f.submit 'Join this Game'
-
-%hr
-
-- if logged_in_user?
-  Sign in to create a game
--else
+  %br            
   -form_for(Game.new) do |f|
     =f.submit 'Create New Game'

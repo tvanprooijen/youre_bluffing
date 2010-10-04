@@ -1,17 +1,24 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  helper_method :logged_in_user?
-
-  def logged_in_user?
-    false
+  helper :all
+  protect_from_forgery
+  
+  before_filter :require_player_name
+  
+  helper_method :player_name
+  
+  
+  
+  def player_name
+    session[:player_name]
   end
   
-  def current_user_name
-    "Test"
+    
+  private 
+  def require_player_name
+    redirect_to edit_player_name_path if player_name.blank?
   end
+  
+  
+  
   
 end

@@ -1,6 +1,12 @@
 %head
   %title Youre Bluffing!
+  =stylesheet_link_tag 'screen'
 
 %body
-  %p{:style => "color: green"}= flash[:notice]
-  = yield
+  #bar
+    - unless player_name.blank?
+      %span.player_name.tittle
+        %strong= player_name
+      %a.change_name{:href => edit_player_name_path} Change Name
+  
+  #main= yield

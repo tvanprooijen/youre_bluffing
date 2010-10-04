@@ -1,0 +1,11 @@
+.pane.small
+  %h1 Whats your name?
+  
+  -form_tag player_name_path, :method => :put do
+    = text_field_tag 'name', player_name
+    = submit_tag "Ok"
+    
+    
+  
+  
+  

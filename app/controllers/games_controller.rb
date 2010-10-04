@@ -22,26 +22,17 @@ class GamesController < ApplicationController
 
 
   def create
-    @game = Game.new(params[:game])
-
-    if @game.save
-      flash[:notice] = 'Game was successfully created.'
-    else
-      flash[:notice] = 'error creating game'
-    end
-    
-    redirect_to games_path
+    @game = Game.create(params[:game])
+    @player = @game.players.create :name => player_name
+    redirect_to(@game)
   end
 
 
   def update
     respond_to do |format|
       if @game.update_attributes(params[:game])
-        flash[:notice] = 'Game was successfully updated.'
-        format.html { redirect_to(@game) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }
       end
     end

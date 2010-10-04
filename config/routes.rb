@@ -1,9 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  
 
-  map.resources :games
+  map.resource :player_name, :only => [:edit,:update]
 
-  
   map.resources :games,
     :member => { :start => :put,
       :fail => :put,
